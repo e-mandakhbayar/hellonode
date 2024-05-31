@@ -1,41 +1,30 @@
-pipeline {
-    agent any
+node {
+    def app
 
-    environment {
-        DOCKER_IMAGE = "myapp:latest"
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        checkout scm
     }
 
-    stages {
-        stage('Setup') {
-            steps {
-                sh 'echo $PATH'
-                sh 'docker --version'
-            }
-        }
-        stage('Build') {
-            steps {
-                script {
-                    docker.build(DOCKER_IMAGE)
-                }
-            }
-        }
-        stage('Run') {
-            steps {
-                script {
-                    def existingContainer = sh(script: "docker ps -q --filter name=myapp-container", returnStdout: true).trim()
-                    if (existingContainer) {
-                        sh "docker stop myapp-container"
-                        sh "docker rm myapp-container"
-                    }
-                    sh "docker run -d -p 8000:8000 --name myapp-container ${DOCKER_IMAGE}"
-                }
-            }
-        }
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+
+        app = docker.build("releaseworks/hellonode:${BUILD_ID}")
     }
 
-    post {
-        always {
-            sh "docker system prune -f"
-        }
+    stage('Run') {
+        
+            script {
+                // Stop and remove the existing container if it's running
+                def existingContainer = sh(script: "docker ps -q --filter name=myapp-container", returnStdout: true).trim()
+                if (existingContainer) {
+                    sh "docker stop myapp-container"
+                    sh "docker rm myapp-container"
+                }
+                // Run the new container
+                sh "docker run -d -p 8000:8000 --name myapp-container releaseworks/hellonode:${BUILD_ID}"
+            }
     }
 }
