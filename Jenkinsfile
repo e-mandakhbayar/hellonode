@@ -16,7 +16,7 @@ node {
     
     stage('Run') {
         steps {
-            docker.image('hellonode:latest').withRun('-p 3306:3306)
+            docker.image('hellonode:latest').withRun('-p 3306:3306')
 
         }
     }
