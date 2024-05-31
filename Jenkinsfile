@@ -16,7 +16,9 @@ node {
     
     stage('Run') {
   
-        docker run --rm hellonode
+        sh """
+          docker run --rm hellonode
+        """
     }
 }
 
