@@ -18,7 +18,11 @@ node {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
 
-        docker run -it -p 8000:8000 getintodevops-hellonode:1
+        node {
+
+          docker.image('releaseworks/hellonode').withRun('--entrypoint /bin/sh', '') {
+  }
+}
         }
     }
 }
