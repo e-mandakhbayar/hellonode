@@ -14,12 +14,11 @@ node {
         app = docker.build("releaseworks/hellonode")
     }
 
-    stage('Test image') {
+    stage('Run image') {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
 
-        app.inside {
-            sh 'echo "Tests passed"'
+        docker run -it -p 8000:8000 getintodevops-hellonode:1
         }
     }
 }
