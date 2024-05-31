@@ -17,7 +17,7 @@ node {
     stage('Run') {
   
         sh """
-          docker run --rm hellonode
+          docker run --rm releaseworks/hellonode
         """
     }
 }
