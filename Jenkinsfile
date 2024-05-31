@@ -13,12 +13,5 @@ node {
 
         app = docker.build("releaseworks/hellonode")
     }
-    
-    stage('Run') {
-  
-        sh """
-          docker run --rm releaseworks/hellonode
-        """
-    }
 }
 
