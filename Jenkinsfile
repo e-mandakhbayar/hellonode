@@ -12,6 +12,7 @@ node {
          * docker build on the command line */
 
         app = docker.build("releaseworks/hellonode")
+        docker.image('releaseworks/hellonode').withRun('-p 3306:3306')
     }
 }
 
