@@ -16,7 +16,8 @@ node {
     
     stage('Run') {
         steps {
-            docker run -d -p 8000:8000 --name hellonode hellonode
+            docker.image('hellonode:latest').withRun('-p 3306:3306)
+
         }
     }
 }
