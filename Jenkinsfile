@@ -17,12 +17,9 @@ node {
     stage('Run image') {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
-
-        node {
-
-          docker.image('releaseworks/hellonode').withRun('--entrypoint /bin/sh', '') {
-  }
-}
+        
+          docker.image('releaseworks/hellonode').withRun('--entrypoint /bin/sh', '')
+  
         }
     }
-}
+
