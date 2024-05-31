@@ -15,7 +15,7 @@ node {
     }
 
     stage('Run') {
-        steps {
+        
             script {
                 // Stop and remove the existing container if it's running
                 def existingContainer = sh(script: "docker ps -q --filter name=myapp-container", returnStdout: true).trim()
@@ -26,7 +26,6 @@ node {
                 // Run the new container
                 sh "docker run -d -p 8000:8000 --name myapp-container releaseworks/hellonode:${BUILD_ID}"
             }
-        }
     }
 }
 
