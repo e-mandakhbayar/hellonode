@@ -16,7 +16,7 @@ node {
     
     stage('Run') {
   
-        docker.image('hellonode:latest').withRun('-p 8000:8000') 
+        docker run --rm hellonode
     }
 }
 
